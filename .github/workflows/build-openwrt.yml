@@ -30,7 +30,7 @@ jobs:
     - name: Configure OpenWRT
       run: |
         cd $GITHUB_WORKSPACE
-        cp .config.example .config  # 替换为你的实际配置文件路径
+        cp .config .config  # 替换为你的实际配置文件路径
         make defconfig
 
     - name: Build OpenWRT
