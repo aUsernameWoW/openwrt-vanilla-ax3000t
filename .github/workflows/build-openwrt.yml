@@ -25,7 +25,7 @@ jobs:
       uses: actions/cache@v3
       with:
         path: openwrt/dl
-        key: ${{ runner.os }}-openwrt-dl-${{ hashFiles('openwrt/.config') }}
+        key: ${{ runner.os }}-openwrt-dl-${{ hashFiles('$GITHUB_WORKSPACE/feeds.conf.default') }}
         restore-keys: |
           ${{ runner.os }}-openwrt-dl-
 
@@ -33,7 +33,7 @@ jobs:
       uses: actions/cache@v3
       with:
         path: openwrt/build_dir
-        key: ${{ runner.os }}-openwrt-build-${{ hashFiles('openwrt/.config') }}
+        key: ${{ runner.os }}-openwrt-build-${{ hashFiles('$GITHUB_WORKSPACE/.config') }}
         restore-keys: |
           ${{ runner.os }}-openwrt-build-
 
@@ -43,15 +43,10 @@ jobs:
         ./scripts/feeds update -a
         ./scripts/feeds install -a
 
-    - name: Configure OpenWRT
-      run: |
-        cd $GITHUB_WORKSPACE
-        make defconfig
-
     - name: Build OpenWRT
       run: |
         cd $GITHUB_WORKSPACE
-        make -j$(nproc)
+        make V=sc -j $(($(nproc)+1)) defconfig download clean world 
 
     - name: Upload firmware
       uses: actions/upload-artifact@v2
