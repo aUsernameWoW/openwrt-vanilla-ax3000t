@@ -42,6 +42,9 @@ jobs:
         cd $GITHUB_WORKSPACE
         ./scripts/feeds update -a
         ./scripts/feeds install -a
+        curl -sSL https://raw.githubusercontent.com/chenmozhijin/turboacc/luci/add_turboacc.sh -o add_turboacc.sh && bash add_turboacc.sh
+        cd $GITHUB_WORKSPACE/package
+        git clone https://github.com/jerrykuku/luci-theme-argon.git
 
     - name: Build OpenWRT
       run: |
