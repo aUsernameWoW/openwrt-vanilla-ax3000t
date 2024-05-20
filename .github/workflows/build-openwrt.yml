@@ -49,7 +49,7 @@ jobs:
     - name: Build OpenWRT
       run: |
         cd $GITHUB_WORKSPACE
-        make V=sc -j $(($(nproc)+1)) defconfig download clean world 
+        make defconfig download clean world 
 
     - name: Upload firmware
       uses: actions/upload-artifact@v2
