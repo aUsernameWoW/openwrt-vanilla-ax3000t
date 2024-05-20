@@ -46,10 +46,28 @@ jobs:
         cd $GITHUB_WORKSPACE/package
         git clone https://github.com/jerrykuku/luci-theme-argon.git
 
+    - name: Checking Config
+      run: |
+        make defconfig
+
+    - name: Download package sources
+      run: |
+        make download V=s
+
+    - name: Build tools
+      run: |
+        make tools/install -j$(nproc) V=s || \
+        make tools/install V=s
+
+    - name: Build toolchain
+      run: |
+        make toolchain/install -j$(nproc) V=s || \
+        make toolchain/install V=s
+
     - name: Build OpenWRT
       run: |
         cd $GITHUB_WORKSPACE
-        make defconfig download clean world 
+        make world 
 
     - name: Upload firmware
       uses: actions/upload-artifact@v2
