@@ -67,7 +67,8 @@ jobs:
     - name: Build OpenWRT
       run: |
         cd $GITHUB_WORKSPACE
-        make world 
+        make -j$(nproc) V=s || \
+        make V=s
 
     - name: Upload firmware
       uses: actions/upload-artifact@v2
