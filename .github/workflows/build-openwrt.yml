@@ -51,24 +51,6 @@ jobs:
         cd $GITHUB_WORKSPACE
         rm -rf .config
         cp .config.mine .config
-        
-    - name: Checking Config
-      run: |
-        make defconfig
-
-    - name: Download package sources
-      run: |
-        make download V=s
-
-    - name: Build tools
-      run: |
-        make tools/install -j$(nproc) V=s || \
-        make tools/install V=s
-
-    - name: Build toolchain
-      run: |
-        make toolchain/install -j$(nproc) V=s || \
-        make toolchain/install V=s
 
     - name: Build OpenWRT
       run: |
