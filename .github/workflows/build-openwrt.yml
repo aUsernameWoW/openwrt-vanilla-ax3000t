@@ -24,7 +24,7 @@ jobs:
     - name: Cache OpenWRT dl folder
       uses: actions/cache@v3
       with:
-        path: openwrt/dl
+        path: $GITHUB_WORKSPACE/dl
         key: ${{ runner.os }}-openwrt-dl-${{ hashFiles('$GITHUB_WORKSPACE/feeds.conf.default') }}
         restore-keys: |
           ${{ runner.os }}-openwrt-dl-
@@ -32,7 +32,7 @@ jobs:
     - name: Cache OpenWRT build_dir
       uses: actions/cache@v3
       with:
-        path: openwrt/build_dir
+        path: $GITHUB_WORKSPACE/build_dir
         key: ${{ runner.os }}-openwrt-build-${{ hashFiles('$GITHUB_WORKSPACE/.config') }}
         restore-keys: |
           ${{ runner.os }}-openwrt-build-
