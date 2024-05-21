@@ -24,6 +24,9 @@ jobs:
         sudo yum install cmake ncurses-devel zlib-devel gcc gcc-c++ patch unzip bzip2 gettext perl-Data-Dumper rsync -y
         sudo yum install git subversion gawk libtool zlib-devel gcc make ncurses-devel patch wget bzip2 flex bison gperf python3 python3-pip python3-setuptools -y
         sudo yum install glibc-devel glibc-static texinfo expat-devel gettext-devel openssl-devel -y
+        sudo yum install perl perl-CPAN -y
+        #sudo cpan IPC::Cmd
+        #yes
 
     - name: Cache OpenWRT dl folder
       uses: actions/cache@v3
