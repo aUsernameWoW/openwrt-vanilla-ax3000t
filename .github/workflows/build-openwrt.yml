@@ -100,6 +100,7 @@ jobs:
         "CONFIG_PACKAGE_zram-swap=y" \
         "CONFIG_PACKAGE_btop=y" \
         > .config
+        make defconfig
 
     - name: Build OpenWRT
       run: |
