@@ -29,7 +29,7 @@ jobs:
         #yes
 
     - name: Configure ccache
-      uses: hendrikmuhs/ccache-action@v1.2
+      uses: hendrikmuhs/ccache-action@v1.2.13
 
     - name: Cache OpenWRT dl folder
       uses: actions/cache@v3
