@@ -55,6 +55,7 @@ jobs:
         curl -sSL https://raw.githubusercontent.com/chenmozhijin/turboacc/luci/add_turboacc.sh -o add_turboacc.sh && bash add_turboacc.sh
         git clone https://github.com/sirpdboy/netspeedtest.git package/netspeedtest
         git clone https://github.com/jerrykuku/luci-theme-argon.git package/luci-theme-argon
+        mkdir package/uugamebooster && cd package/uugamebooster && git init && git remote add -f origin https://github.com/coolsnowwolf/packages.git && git config core.sparseCheckout true && echo "net/uugamebooster/*" >> .git/info/sparse-checkout && git pull origin master
 
     - name: Configure .config
       run: |
@@ -71,7 +72,6 @@ jobs:
         "CONFIG_FEED_packages=y" \
         "CONFIG_FEED_routing=y" \
         "CONFIG_FEED_telephony=y" \
-        "CONFIG_PACKAGE_wpad=y" \
         "CONFIG_LUCI_LANG_zh_Hans=y" \
         "CONFIG_PACKAGE_luci-app-firewall=y" \
         "CONFIG_PACKAGE_luci-app-opkg=y" \
@@ -119,11 +119,15 @@ jobs:
         "CONFIG_DEBUG_INFO_BTF=y" \
         "CONFIG_KPROBE_EVENTS=y" \
         "CONFIG_BPF_EVENTS=y" \
-        "CONFIG_PACKAGE_wpad-wolfssl=m" \
+        "CONFIG_PACKAGE_wpad-wolfssl=y" \
         "CONFIG_PACKAGE_kmod=y" \
         "CONFIG_CCACHE=y" \
         "CONFIG_PACKAGE_luci-app-netspeedtest=y" \
         "CONFIG_PACKAGE_luci-app-https-dns-proxy=y" \
+        "CONFIG_PACKAGE_uugamebooster=y" \
+        "CONFIG_LIBCURL_OPENSSL=y" \
+        "CONFIG_LIBCURL_NGHTTP3=y" \
+        "CONFIG_LIBCURL_ZSTD=y" \
         > .config
         make defconfig
 
