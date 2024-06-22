@@ -56,7 +56,7 @@ jobs:
         git clone https://github.com/sirpdboy/netspeedtest.git package/netspeedtest
         git clone https://github.com/jerrykuku/luci-theme-argon.git package/luci-theme-argon
         mkdir package/uugamebooster && cd package/uugamebooster && git init && git remote add -f origin https://github.com/coolsnowwolf/packages.git && git config core.sparseCheckout true && echo "net/uugamebooster/*" >> .git/info/sparse-checkout && git pull origin master
-        cd net/uugamebooster/ && sed -i 's|PKG_SOURCE_URL:=https://uu.gdl.netease.com/uuplugin/openwrt-$(UU_ARCH)/$(PKG_VERSION)/uu.tar.gz?|PKG_SOURCE_URL:=https://uu.gdl.netease.com/uuplugin/openwrt-$(UU_ARCH)/$(PKG_VERSION)/uu.tar.gz|g' path/to/your/Makefile
+        sed -i 's|PKG_SOURCE_URL:=https://uu.gdl.netease.com/uuplugin/openwrt-$(UU_ARCH)/$(PKG_VERSION)/uu.tar.gz?|PKG_SOURCE_URL:=https://uu.gdl.netease.com/uuplugin/openwrt-$(UU_ARCH)/$(PKG_VERSION)/uu.tar.gz|g' net/uugamebooster/Makefile
 
     - name: Configure .config
       run: |
