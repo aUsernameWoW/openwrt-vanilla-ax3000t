@@ -47,6 +47,21 @@ jobs:
         restore-keys: |
           ${{ runner.os }}-openwrt-build-
 
+    - name: Set up ccache environment
+      run: |
+        export PATH="/usr/lib/ccache:$PATH"
+        export CC="ccache gcc"
+        export CXX="ccache g++"
+        export CONFIG_CCACHE=y
+        export CONFIG_CCACHE_DIR="$GITHUB_WORKSPACE/.ccache"
+
+    - uses: actions/cache@v2
+      with:
+        path: $GITHUB_WORKSPACE/.ccache
+        key: ${{ runner.os }}-ccache-${{ hashFiles('**/Makefile') }}
+        restore-keys: |
+          ${{ runner.os }}-ccache-
+
     - name: Clone OpenWRT
       run: |
         cd $GITHUB_WORKSPACE
