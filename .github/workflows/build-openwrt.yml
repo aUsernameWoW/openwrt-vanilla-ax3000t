@@ -55,8 +55,7 @@ jobs:
         curl -sSL https://raw.githubusercontent.com/chenmozhijin/turboacc/luci/add_turboacc.sh -o add_turboacc.sh && bash add_turboacc.sh
         git clone https://github.com/sirpdboy/netspeedtest.git package/netspeedtest
         git clone https://github.com/jerrykuku/luci-theme-argon.git package/luci-theme-argon
-        mkdir package/uugamebooster && cd package/uugamebooster && git init && git remote add -f origin https://github.com/coolsnowwolf/packages.git && git config core.sparseCheckout true && echo "net/uugamebooster/*" >> .git/info/sparse-checkout && git pull origin master
-        sed -i 's|PKG_SOURCE_URL:=https://uu.gdl.netease.com/uuplugin/openwrt-$(UU_ARCH)/$(PKG_VERSION)/uu.tar.gz?|PKG_SOURCE_URL:=https://uu.gdl.netease.com/uuplugin/openwrt-$(UU_ARCH)/$(PKG_VERSION)/uu.tar.gz|g' net/uugamebooster/Makefile
+        git clone https://github.com/aUsernameWoW/uugamebooster && cd package/uugamebooster && bash update_makefile.sh
 
     - name: Configure .config
       run: |
@@ -130,6 +129,7 @@ jobs:
         "CONFIG_LIBCURL_OPENSSL=y" \
         "CONFIG_LIBCURL_NGHTTP3=y" \
         "CONFIG_LIBCURL_ZSTD=y" \
+        "CONFIG_DEVEL=y" \
         > .config
         make defconfig
 
