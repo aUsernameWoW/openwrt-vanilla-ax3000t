@@ -134,7 +134,6 @@ jobs:
         echo 'CONFIG_DEBUG_INFO_BTF=y' >> .config
         echo 'CONFIG_KPROBE_EVENTS=y' >> .config
         echo 'CONFIG_BPF_EVENTS=y' >> .config
-        echo 'CONFIG_PACKAGE_wpad-wolfssl=y' >> .config
         echo 'CONFIG_PACKAGE_kmod=y' >> .config
         echo 'CONFIG_CCACHE=y' >> .config
         echo 'CONFIG_CCACHE_DIR=".ccache"' >> .config
@@ -145,6 +144,8 @@ jobs:
         echo 'CONFIG_LIBCURL_NGHTTP3=y' >> .config
         echo 'CONFIG_LIBCURL_ZSTD=y' >> .config
         echo 'CONFIG_DEVEL=y' >> .config
+        echo 'CONFIG_PACKAGE_wpad=y' >> .config
+        echo 'CONFIG_WPA_WOLFSSL=y' >> .config
         make defconfig
 
     - name: Build OpenWRT
