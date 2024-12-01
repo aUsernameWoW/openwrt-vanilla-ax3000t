@@ -15,7 +15,7 @@ jobs:
 
     steps:
     - name: Checkout code
-      uses: actions/checkout@v4
+      uses: actions/checkout@v2
 
     - name: Set up environment
       run: |
@@ -154,7 +154,7 @@ jobs:
         make -j$(nproc) V=s || make V=s
 
     - name: Upload firmware
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v4
       with:
         name: openwrt-firmware
         path: |
