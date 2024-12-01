@@ -39,11 +39,8 @@ define KernelPackage/crypto-aead
   TITLE:=CryptoAPI AEAD support
   KCONFIG:= \
 	CONFIG_CRYPTO_AEAD \
-	CONFIG_CRYPTO_AEAD2 \
-	CONFIG_CRYPTO_GENIV@lt6.6
-  FILES:= \
-	  $(LINUX_DIR)/crypto/aead.ko \
-	  $(LINUX_DIR)/crypto/geniv.ko@lt6.6
+	CONFIG_CRYPTO_AEAD2
+  FILES:=$(LINUX_DIR)/crypto/aead.ko
   AUTOLOAD:=$(call AutoLoad,09,aead,1)
   $(call AddDepends/crypto, +kmod-crypto-null)
 endef
@@ -79,6 +76,18 @@ define KernelPackage/crypto-authenc
 endef
 
 $(eval $(call KernelPackage,crypto-authenc))
+
+
+define KernelPackage/crypto-blake2b
+  TITLE:=Support for BLAKE2b cryptographic hash function (RFC 7693)
+  DEPENDS:=+kmod-crypto-hash
+  KCONFIG:=CONFIG_CRYPTO_BLAKE2B
+  FILES:=$(LINUX_DIR)/crypto/blake2b_generic.ko
+  AUTOLOAD:=$(call AutoLoad,09,blake2b_generic)
+  $(call AddDepends/crypto)
+endef
+
+$(eval $(call KernelPackage,crypto-blake2b))
 
 
 define KernelPackage/crypto-cbc
@@ -231,7 +240,7 @@ $(eval $(call KernelPackage,crypto-ecdh))
 
 define KernelPackage/crypto-echainiv
   TITLE:=Encrypted Chain IV Generator
-  DEPENDS:=+kmod-crypto-aead +LINUX_6_6:kmod-crypto-geniv
+  DEPENDS:=+kmod-crypto-aead +kmod-crypto-geniv
   KCONFIG:=CONFIG_CRYPTO_ECHAINIV
   FILES:=$(LINUX_DIR)/crypto/echainiv.ko
   AUTOLOAD:=$(call AutoLoad,09,echainiv)
@@ -240,6 +249,15 @@ endef
 
 $(eval $(call KernelPackage,crypto-echainiv))
 
+define KernelPackage/crypto-engine
+  TITLE:=Crypto engine
+  KCONFIG:=CONFIG_CRYPTO_ENGINE
+  FILES:=$(LINUX_DIR)/crypto/crypto_engine.ko
+  AUTOLOAD:=$(call AutoLoad,09,crypto_engine)
+  $(call AddDepends/crypto, +kmod-crypto-rsa +kmod-crypto-kpp)
+endef
+
+$(eval $(call KernelPackage,crypto-engine))
 
 define KernelPackage/crypto-essiv
   TITLE:=ESSIV support for block encryption
@@ -293,9 +311,7 @@ define KernelPackage/crypto-gf128
   KCONFIG:= \
 	CONFIG_CRYPTO_GF128MUL \
 	CONFIG_CRYPTO_LIB_GF128MUL
-  FILES:= \
-	$(LINUX_DIR)/crypto/gf128mul.ko@lt6.2 \
-	$(LINUX_DIR)/lib/crypto/gf128mul.ko@ge6.2
+  FILES:=$(LINUX_DIR)/lib/crypto/gf128mul.ko
   AUTOLOAD:=$(call AutoLoad,09,gf128mul)
   $(call AddDepends/crypto)
 endef
@@ -851,8 +867,7 @@ define KernelPackage/crypto-rsa
   KCONFIG:= CONFIG_CRYPTO_RSA
   HIDDEN:=1
   FILES:= \
-	$(LINUX_DIR)/lib/mpi/mpi.ko@lt6.5 \
-	$(LINUX_DIR)/lib/crypto/mpi/mpi.ko@ge6.5 \
+	$(LINUX_DIR)/lib/crypto/mpi/mpi.ko \
 	$(LINUX_DIR)/crypto/akcipher.ko \
 	$(LINUX_DIR)/crypto/rsa_generic.ko
   AUTOLOAD:=$(call AutoLoad,10,rsa_generic)
@@ -876,7 +891,7 @@ $(eval $(call KernelPackage,crypto-rmd160))
 
 define KernelPackage/crypto-rng
   TITLE:=CryptoAPI random number generation
-  DEPENDS:=+kmod-crypto-hash +kmod-crypto-hmac +kmod-crypto-sha512 +LINUX_6_6:kmod-crypto-sha3
+  DEPENDS:=+kmod-crypto-hash +kmod-crypto-hmac +kmod-crypto-sha512 +kmod-crypto-sha3
   KCONFIG:= \
 	CONFIG_CRYPTO_DRBG \
 	CONFIG_CRYPTO_DRBG_HMAC=y \
@@ -898,7 +913,7 @@ $(eval $(call KernelPackage,crypto-rng))
 define KernelPackage/crypto-geniv
   TITLE:=CryptoAPI Shared IV generator
   HIDDEN:=1
-  DEPENDS:=+kmod-crypto-rng +kmod-crypto-aead @LINUX_6_6
+  DEPENDS:=+kmod-crypto-rng +kmod-crypto-aead
   KCONFIG:=CONFIG_CRYPTO_GENIV
   FILES:=$(LINUX_DIR)/crypto/geniv.ko
   AUTOLOAD:=$(call AutoLoad,09,geniv)
@@ -910,7 +925,7 @@ $(eval $(call KernelPackage,crypto-geniv))
 
 define KernelPackage/crypto-seqiv
   TITLE:=CryptoAPI Sequence Number IV Generator
-  DEPENDS:=+kmod-crypto-aead +kmod-crypto-rng +LINUX_6_6:kmod-crypto-geniv
+  DEPENDS:=+kmod-crypto-aead +kmod-crypto-rng +kmod-crypto-geniv
   KCONFIG:=CONFIG_CRYPTO_SEQIV
   FILES:=$(LINUX_DIR)/crypto/seqiv.ko
   AUTOLOAD:=$(call AutoLoad,09,seqiv)
@@ -1125,7 +1140,7 @@ $(eval $(call KernelPackage,crypto-test))
 
 define KernelPackage/crypto-user
   TITLE:=CryptoAPI userspace interface
-  DEPENDS:=+kmod-crypto-hash +kmod-crypto-manager +LINUX_6_6:kmod-crypto-rng
+  DEPENDS:=+kmod-crypto-hash +kmod-crypto-manager +kmod-crypto-rng
   KCONFIG:= \
 	CONFIG_CRYPTO_USER \
 	CONFIG_CRYPTO_USER_API \
@@ -1157,4 +1172,16 @@ define KernelPackage/crypto-xts
 endef
 
 $(eval $(call KernelPackage,crypto-xts))
+
+
+define KernelPackage/crypto-xxhash
+  TITLE:=xxHash non-cryptographic hash algorithm
+  DEPENDS:=+kmod-crypto-hash +kmod-lib-xxhash
+  KCONFIG:=CONFIG_CRYPTO_XXHASH
+  FILES:=$(LINUX_DIR)/crypto/xxhash_generic.ko
+  AUTOLOAD:=$(call AutoLoad,09,xxhash_generic)
+  $(call AddDepends/crypto)
+endef
+
+$(eval $(call KernelPackage,crypto-xxhash))
 
