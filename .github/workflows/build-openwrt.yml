@@ -86,7 +86,7 @@ jobs:
         max_attempts: 3
         retry_wait_seconds: 60
         command: |
-          make -j$(nproc) V=s || make V=s
+          make -j$(nproc) || make
         on_retry_command: |
           rm -rf build_dir/target-*
           rm -rf build_dir/toolchain-*
