@@ -11,7 +11,6 @@ on:
 
 env:
   FORCE_UNSAFE_CONFIGURE: 1
-  MODIFIED_PATH: /usr/lib/ccache:${{ env.PATH }}
   CC: ccache gcc
   CXX: ccache g++
   CONFIG_CCACHE: y
@@ -23,11 +22,11 @@ jobs:
     
     steps:
     - name: Checkout code
-      uses: actions/checkout@v3  # 更新到 v3
-      
+      uses: actions/checkout@v3
+
     - name: Set up environment
       run: |
-        export PATH="/usr/lib/ccache:$PATH"  # 在步骤级别设置 PATH
+        echo "/usr/lib/ccache" >> $GITHUB_PATH
         sudo apt update
         sudo apt install -y build-essential clang flex bison g++ gawk \
           gcc-multilib g++-multilib gettext git libncurses5-dev libssl-dev \
