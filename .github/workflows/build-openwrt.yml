@@ -71,7 +71,6 @@ jobs:
       run: |
         curl -sSL https://raw.githubusercontent.com/chenmozhijin/turboacc/luci/add_turboacc.sh -o add_turboacc.sh
         bash add_turboacc.sh
-        git clone https://github.com/sirpdboy/netspeedtest.git package/netspeedtest
         git clone https://github.com/jerrykuku/luci-theme-argon.git package/luci-theme-argon
 
     - name: Configure OpenWRT
@@ -80,16 +79,8 @@ jobs:
         make defconfig
 
     - name: Build OpenWRT
-      uses: nick-invision/retry@v2
-      with:
-        timeout_minutes: 360
-        max_attempts: 3
-        retry_wait_seconds: 60
-        command: |
-          make -j$(nproc) || make
-        on_retry_command: |
-          rm -rf build_dir/target-*
-          rm -rf build_dir/toolchain-*
+      run: |
+          make -j$(nproc)
 
     - name: Generate build info
       if: success()
