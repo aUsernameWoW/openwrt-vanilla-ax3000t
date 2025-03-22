@@ -604,6 +604,18 @@ define Device/hnet_c108
 endef
 TARGET_DEVICES += hnet_c108
 
+define Device/hongdian_h8922-v30
+  SOC := mt7620a
+  IMAGE_SIZE := 15808k
+  DEVICE_VENDOR := Hongdian
+  DEVICE_MODEL := H8922
+  DEVICE_VARIANT := v30
+  DEVICE_PACKAGES := kmod-usb2 kmod-usb-ohci kmod-usb-net-qmi-wwan kmod-usb-serial-option uqmi uboot-envtools
+  IMAGES += rootfs.bin
+  IMAGE/rootfs.bin := append-rootfs | check-size 10560k
+endef
+TARGET_DEVICES += hongdian_h8922-v30
+
 define Device/humax_e2
   SOC := mt7620a
   IMAGE_SIZE := 7744k
@@ -1321,6 +1333,16 @@ define Device/trendnet_tew-810dr
   IMAGE_SIZE := 6720k
 endef
 TARGET_DEVICES += trendnet_tew-810dr
+
+define Device/trendnet_tha103ac
+  SOC := mt7620a
+  DEVICE_PACKAGES := kmod-mt76x0e rssileds
+  DEVICE_VENDOR := TRENDnet
+  DEVICE_MODEL := THA-103AC
+  IMAGE_SIZE := 7872k
+  SUPPORTED_DEVICES += mt7620a_mt7610e
+endef
+TARGET_DEVICES += trendnet_tha103ac
 
 define Device/vonets_var11n-300
   SOC := mt7620n

@@ -195,6 +195,7 @@ function setup_phy(phy, config, data) {
 	log(`Configuring '${phy}' txantenna: ${config.txantenna}, rxantenna: ${config.rxantenna} distance: ${config.distance}`);
 	system(`iw phy ${phy} set antenna ${config.txantenna} ${config.rxantenna}`);
 	system(`iw phy ${phy} set distance ${config.distance}`);
+	system(`iw phy ${phy} set txpower ${config.txpower}`);
 
 	if (config.frag)
 		system(`iw phy ${phy} set frag ${frag}`);
@@ -302,7 +303,7 @@ function setup() {
 			if (mode != "ap")
 				data.config.noscan = true;
 			validate('iface', v.config);
-			iface.prepare(v.config, data.phy + data.phy_suffix, data.config.num_global_macaddr);
+			iface.prepare(v.config, data.phy + data.phy_suffix, data.config.num_global_macaddr, data.config.macaddr_base);
 			netifd.set_vif(k, v.config.ifname);
 			break;
 		}
